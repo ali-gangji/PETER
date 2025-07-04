@@ -43,7 +43,7 @@ function ElectricalPowerGeneralAspects() {
           id="lifetime"
           fieldValue={product.inUsePowerConsumption.lifetime}
           label="In-use lifetime (in hours)"
-          classes="w-18xl"
+          className="w-18xl"
           onChange={(value: number) => {
             dispatch(
               inUsePowerConsumptionUpdated({

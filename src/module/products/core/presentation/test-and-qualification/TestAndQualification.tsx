@@ -6,7 +6,12 @@ import {
   MenuItem,
   Select,
   Typography,
+  Button,
+  IconButton,
 } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   energyUsedAtTestLocationAdded,
   energyUsedAtTestLocationRemoved,
@@ -14,8 +19,6 @@ import {
   testsAndQualificationsToggled,
 } from '../../domain/product.slice';
 import NumberField from '../../../../../ui/components/NumberField';
-import DeleteIconButton from '../../../../../ui/components/DeleteIconButton';
-import AddFormItemButton from '../../../../../ui/components/AddFormItemButton';
 import { selectCurrentProduct } from '../../domain/product.selector';
 import { selectConfiguration } from '../../domain/configuration.selector';
 import { DefaultLocationId } from '../../domain/entity/TestLocation';
@@ -31,6 +34,37 @@ function TestAndQualification() {
     return product.energyUsedAtTestLocations.testLocations.length > 1;
   };
 
+  // --- Animation Variants ---
+  const listContainerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.07,
+      },
+    },
+  };
+
+  const listItemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1 },
+    exit: { x: -50, opacity: 0, transition: { duration: 0.2 } },
+  };
+
+  // --- Style Objects ---
+  const formControlFocusStyles = {
+    '& label.Mui-focused': { color: '#E6002D' },
+    '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+      borderColor: '#E6002D',
+    },
+  };
+
+  const menuItemStyles = {
+    '&:hover': { backgroundColor: 'rgba(230, 0, 45, 0.08)' },
+    '&.Mui-selected': { backgroundColor: 'rgba(230, 0, 45, 0.12) !important' },
+    '&.Mui-selected:hover': { backgroundColor: 'rgba(230, 0, 45, 0.16) !important' },
+  };
+
   return (
     <Section
       title="Tests & qualification"
@@ -40,76 +74,116 @@ function TestAndQualification() {
         dispatch(testsAndQualificationsToggled());
       }}
     >
-      <Typography variant="body2">
-        Energy consumed on site per product unit (e.g. satellite)
+      <Typography variant="body2" className="mt-1 text-slate-600">
+        Energy consumed on site per product unit (e.g. satellite).
       </Typography>
 
-      {product.energyUsedAtTestLocations.testLocations.map(
-        (energyUsedAtTestLocation) => (
-          <div
-            className="mt-2 flex items-end"
-            key={energyUsedAtTestLocation.id}
-          >
-            <FormControl>
-              <FormLabel>Test location</FormLabel>
-              <Select
-                id="select_test_location"
-                className="w-18xl"
-                value={energyUsedAtTestLocation.testLocationId}
-                onChange={(event) => {
-                  dispatch(
-                    energyUsedAtTestLocationUpdated({
-                      id: energyUsedAtTestLocation.id,
-                      testLocationId: event.target.value,
-                      energy: energyUsedAtTestLocation.energy,
-                    })
-                  );
-                }}
+      <motion.div
+        className="mt-6 space-y-4"
+        variants={listContainerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <AnimatePresence>
+          {product.energyUsedAtTestLocations.testLocations.map(
+            (energyUsedAtTestLocation) => (
+              <motion.div
+                key={energyUsedAtTestLocation.id}
+                variants={listItemVariants}
+                exit="exit"
+                layout
+                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                whileHover={{ backgroundColor: 'rgba(230, 0, 45, 0.04)' }}
+                className="flex items-end space-x-4 p-2 rounded-lg"
               >
-                <MenuItem value={DefaultLocationId}>
-                  No selected location
-                </MenuItem>
-                {configuration.items.testLocations.map((location) => (
-                  <MenuItem value={location.id} key={location.id}>
-                    {location.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <div className="ml-2">
-              <NumberField
-                id="energy"
-                fieldValue={energyUsedAtTestLocation.energy}
-                classes="w-18xl"
-                label="Total energy at stake (kWh)"
-                onChange={(value: number) => {
-                  dispatch(
-                    energyUsedAtTestLocationUpdated({
-                      id: energyUsedAtTestLocation.id,
-                      testLocationId: energyUsedAtTestLocation.testLocationId,
-                      energy: value,
-                    })
-                  );
-                }}
-              />
-            </div>
-            {canDeleteTestLocations() && (
-              <DeleteIconButton
-                onClick={() => {
-                  dispatch(
-                    energyUsedAtTestLocationRemoved(energyUsedAtTestLocation.id)
-                  );
-                }}
-              />
-            )}
-          </div>
-        )
-      )}
-
-      <AddFormItemButton
-        label="Test location"
-        onClick={() => dispatch(energyUsedAtTestLocationAdded())}
-      />
+                <FormControl fullWidth sx={formControlFocusStyles}>
+                  <FormLabel>Test location</FormLabel>
+                  <Select
+                    value={energyUsedAtTestLocation.testLocationId}
+                    onChange={(event) => {
+                      dispatch(
+                        energyUsedAtTestLocationUpdated({
+                          id: energyUsedAtTestLocation.id,
+                          testLocationId: event.target.value,
+                          energy: energyUsedAtTestLocation.energy,
+                        })
+                      );
+                    }}
+                    MenuProps={{ sx: { '& .MuiMenuItem-root': menuItemStyles } }}
+                  >
+                    <MenuItem value={DefaultLocationId}>
+                      No selected location
+                    </MenuItem>
+                    {configuration.items.testLocations.map((location) => (
+                      <MenuItem value={location.id} key={location.id}>
+                        {location.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <div className="w-48">
+                  <NumberField
+                    id={`energy-${energyUsedAtTestLocation.id}`}
+                    fieldValue={energyUsedAtTestLocation.energy}
+                    label="Total energy (kWh)"
+                    onChange={(value: number) => {
+                      dispatch(
+                        energyUsedAtTestLocationUpdated({
+                          id: energyUsedAtTestLocation.id,
+                          testLocationId:
+                            energyUsedAtTestLocation.testLocationId,
+                          energy: value,
+                        })
+                      );
+                    }}
+                  />
+                </div>
+                {canDeleteTestLocations() && (
+                  <IconButton
+                    aria-label="delete test location"
+                    onClick={() => {
+                      dispatch(
+                        energyUsedAtTestLocationRemoved(
+                          energyUsedAtTestLocation.id
+                        )
+                      );
+                    }}
+                    sx={{
+                      color: 'rgba(0, 0, 0, 0.54)',
+                      transition: 'all 0.2s ease-in-out',
+                      '&:hover': {
+                        backgroundColor: 'rgba(230, 0, 45, 0.08)',
+                        color: '#E6002D',
+                        transform: 'translateY(-2px)',
+                      },
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                )}
+              </motion.div>
+            )
+          )}
+        </AnimatePresence>
+        <div className="pt-4">
+          <Button
+            variant="contained"
+            onClick={() => dispatch(energyUsedAtTestLocationAdded())}
+            startIcon={<AddCircleOutlineIcon />}
+            sx={{
+              backgroundColor: '#E6002D',
+              transition: 'all 0.2s ease-in-out',
+              '&:hover': {
+                backgroundColor: '#c00026',
+                transform: 'translateY(-2px)',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+              },
+            }}
+          >
+            Add Test location
+          </Button>
+        </div>
+      </motion.div>
     </Section>
   );
 }

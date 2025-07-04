@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  Box,
   FormControl,
   FormControlLabel,
   FormLabel,
@@ -48,44 +47,46 @@ function Recycling() {
       onToggle={() => dispatch(recyclingToggled())}
       enabled={product.recycling.enabled}
     >
-      <FormControl>
-        <FormLabel>Please define the recycling type of your product</FormLabel>
+      <FormControl component="fieldset" sx={{ '& .MuiFormLabel-root.Mui-focused': { color: '#E6002D' } }}>
+        <FormLabel component="legend" sx={{ mb: 1.5, color: 'text.primary', fontWeight: 'medium' }}>
+          Please define the recycling type of your product
+        </FormLabel>
         <RadioGroup
-          className="mt-2 w-fit"
           value={product.recycling.type}
           name="recyclingType"
           onChange={(event) => {
             dispatch(
               recyclingTypeUpdated(
-                RecyclingType[event.target.value as RecyclingType]
+                event.target.value as RecyclingType
               )
             );
           }}
         >
-          <div className="flex">
-            {recyclingTypes.map((recyclingType, index) => (
+          {recyclingTypes.map((recyclingType) => (
+            <div key={recyclingType.value} className="mb-2">
               <FormControlLabel
                 value={recyclingType.value}
-                key={recyclingType.value}
-                control={<Radio />}
+                control={
+                  <Radio
+                    sx={{
+                      color: 'rgba(0, 0, 0, 0.54)',
+                      '&.Mui-checked': {
+                        color: '#E6002D',
+                      },
+                    }}
+                  />
+                }
                 label={recyclingType.label}
-                className={index > 0 ? 'ml-s' : ''}
               />
-            ))}
-          </div>
-        </RadioGroup>
-        <Box>
-          {recyclingTypes.map((recyclingType) => (
-            <Typography
-              mr="10rem"
-              ml="4rem"
-              variant="caption"
-              className="text-bluegrey-500"
-            >
-              {recyclingType.description}
-            </Typography>
+              <Typography
+                variant="caption"
+                className="text-slate-500 block pl-8 -mt-1"
+              >
+                {recyclingType.description}
+              </Typography>
+            </div>
           ))}
-        </Box>
+        </RadioGroup>
       </FormControl>
     </Section>
   );

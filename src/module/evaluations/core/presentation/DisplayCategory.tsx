@@ -1,3 +1,4 @@
+import React from 'react';
 import { Category } from '../domain/entity/Category';
 
 interface Props {
@@ -59,20 +60,30 @@ function DisplayCategory({ category }: Props) {
     ],
   ]);
 
+  const categoryInfo = descriptions.get(category);
+
+  if (!categoryInfo) {
+    return null; // Or a fallback UI
+  }
+
   return (
-    <div className="flex mt-2">
-      <div className="flex flex-col">
-        <div className="flex h-full justify-center items-center mt-1">
-          <div className="qtm-title-1">
-            {descriptions.get(category)?.shortName}
-          </div>
-        </div>
-      </div>
-      <div className="flex flex-col ml-6">
-        <div className="mt-2 flex qtm-body-2">
-          {descriptions.get(category)?.description}
-        </div>
-      </div>
+    <div className="overflow-hidden border border-slate-200 rounded-lg">
+      <table className="w-full text-sm">
+        <tbody>
+          <tr className="border-b border-slate-200">
+            <td className="p-3 bg-slate-50 font-semibold text-slate-600 w-1/3">Category</td>
+            <td className="p-3 font-bold text-hitachi-red text-lg">{categoryInfo.shortName}</td>
+          </tr>
+          <tr className="border-b border-slate-200">
+            <td className="p-3 bg-slate-50 font-semibold text-slate-600 align-top">Name</td>
+            <td className="p-3 text-slate-800">{categoryInfo.name}</td>
+          </tr>
+          <tr>
+            <td className="p-3 bg-slate-50 font-semibold text-slate-600 align-top">Description</td>
+            <td className="p-3 text-slate-600">{categoryInfo.description}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 }

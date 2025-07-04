@@ -1,3 +1,4 @@
+import React from 'react'
 import ReactApexChart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 import { EvaluationResult } from '../domain/entity/EvaluationVersions';

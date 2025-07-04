@@ -35,7 +35,7 @@ function PowerConsumptionBreakdown() {
                 id="power"
                 fieldValue={powerLevel.power}
                 label="Power (W)"
-                classes="w-18xl"
+                className="w-18xl"
                 onChange={(value: number) => {
                   dispatch(
                     powerLevelUpdated({
@@ -48,7 +48,7 @@ function PowerConsumptionBreakdown() {
               />
               <NumberField
                 id="share"
-                classes="ml-2 w-18xl"
+                className="ml-2 w-18xl"
                 fieldValue={powerLevel.share}
                 label="Share (%)"
                 onChange={(value: number) => {
