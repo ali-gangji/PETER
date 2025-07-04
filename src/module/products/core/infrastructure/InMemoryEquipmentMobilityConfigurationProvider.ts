@@ -8,363 +8,108 @@ class InMemoryEquipmentMobilityConfigurationProvider
     return {
       embeddedPlatformModels: [
         {
-          id: '1',
-          sectorId: '',
-          name: '',
-          description: '',
+          id: '1', // Kept original ID
+          sectorId: 'RAIL', // New Hitachi Data
+          name: 'Tramway',
+          description: 'Urban light rail vehicle',
           defaultValue: {
-            description: '',
-            value: 100000,
-          },
-        },
-        {
-          id: '2',
-          sectorId: '',
-          name: '',
-          description: '',
-          defaultValue: {
-            description: '',
-            value: 160000,
-          },
-        },
-        {
-          id: '3',
-          sectorId: '',
-          name: '',
-          description: '',
-          defaultValue: {
-            description: '',
-            value: 60000,
-          },
-        },
-        {
-          id: '4',
-          sectorId: '',
-          name: '',
-          description: '',
-          defaultValue: {
-            description: '',
-            value: 20000,
-          },
-        },
-        {
-          id: '5',
-          sectorId: '',
-          name: '',
-          description: '',
-          defaultValue: {
-            description: '',
-            value: 7500,
-          },
-        },
-        {
-          id: '6',
-          sectorId: '',
-          name: '',
-          description: '',
-          defaultValue: {
-            description: '',
-            value: 20000,
-          },
-        },
-        {
-          id: '7',
-          sectorId: '',
-          name: '',
-          description: '',
-          defaultValue: {
-            description: '',
-            value: 5500,
-          },
-        },
-        {
-          id: '8',
-          sectorId: '',
-          name: '',
-          description: '',
-          defaultValue: {
-            description: '',
-            value: 10000,
-          },
-        },
-        {
-          id: '9',
-          sectorId: '',
-          name: '',
-          description: '',
-          defaultValue: {
-            description: '',
-            value: 1,
-          },
-        },
-        {
-          id: '10',
-          sectorId: '',
-          name: '',
-          description: '',
-          defaultValue: {
-            description: '',
-            value: 150000,
-          },
-        },
-        {
-          id: '11',
-          sectorId: '',
-          name: '',
-          description: '',
-          defaultValue: {
-            description: '',
-            value: 100000,
-          },
-        },
-        {
-          id: '12',
-          sectorId: '',
-          name: '',
-          description: '',
-          defaultValue: {
-            description: '',
-            value: 1000000,
-          },
-        },
-        {
-          id: '13',
-          sectorId: '',
-          name: '',
-          description: '',
-          defaultValue: {
-            description: '',
-            value: 1000000,
-          },
-        },
-        {
-          id: '14',
-          sectorId: '',
-          name: '',
-          description: '',
-          defaultValue: {
-            description: '',
+            description: 'Adjusted use',
             value: 2000000,
           },
         },
         {
-          id: '15',
-          sectorId: '',
-          name: '',
-          description: '',
+          id: '2', // Kept original ID
+          sectorId: 'RAIL', // New Hitachi Data
+          name: 'Urban',
+          description: 'Urban metro/subway train',
           defaultValue: {
-            description: '',
+            description: 'Adjusted use',
             value: 4000000,
           },
         },
         {
-          id: '16',
-          sectorId: '',
-          name: '',
-          description: '',
+          id: '3', // Kept original ID
+          sectorId: 'RAIL', // New Hitachi Data
+          name: 'Regional / intercity',
+          description: 'Regional or intercity train',
           defaultValue: {
-            description: '',
+            description: 'Adjusted use',
             value: 7500000,
           },
         },
         {
-          id: '17',
-          sectorId: '',
-          name: '',
-          description: '',
+          id: '4', // Kept original ID
+          sectorId: 'RAIL', // New Hitachi Data
+          name: 'Hi-speed',
+          description: 'High-speed train',
           defaultValue: {
-            description: '',
+            description: 'Adjusted use',
             value: 12500000,
           },
         },
         {
-          id: '18',
-          sectorId: '',
-          name: '',
-          description: '',
+          id: '5', // Kept original ID
+          sectorId: 'GROUND CIVILIAN', // New Hitachi Data
+          name: 'Urban bus - fuel/diesel/CNG',
+          description: 'Urban bus with internal combustion engine',
           defaultValue: {
-            description: '',
-            value: 30,
+            description: 'Adjusted use',
+            value: 1000000,
           },
         },
         {
-          id: '19',
-          sectorId: '',
-          name: '',
-          description: '',
+          id: '6', // Kept original ID
+          sectorId: 'GROUND CIVILIAN', // New Hitachi Data
+          name: 'Urban bus - electric',
+          description: 'Urban bus with electric motor',
           defaultValue: {
-            description: '',
-            value: 30,
-          },
-        },
-        {
-          id: '20',
-          sectorId: '',
-          name: '',
-          description: '',
-          defaultValue: {
-            description: '',
-            value: 35,
+            description: 'Adjusted use',
+            value: 1000000,
           },
         },
       ],
       transportedPlatformModels: [
         {
-          id: 'tpm-1',
-          sector: '',
-          name: '',
-          description: '',
-          defaultValue: this.getDefaultFlight(),
-        },
-        {
-          id: 'tpm-2',
-          sector: '',
-          name: '',
-          description: '',
-          defaultValue: this.getDefaultFlight(),
-        },
-        {
-          id: 'tpm-3',
-          sector: '',
-          name: '',
-          description: '',
-          defaultValue: this.getDefaultFlight(),
-        },
-        {
-          id: 'tpm-4',
-          sector: '',
-          name: '',
-          description: '',
-          defaultValue: this.getDefaultFlight(),
-        },
-        {
-          id: 'tpm-5',
-          sector: '',
-          name: '',
-          description: '',
-          defaultValue: this.getDefaultFlight(),
-        },
-        {
-          id: 'tpm-6',
-          sector: '',
-          name: '',
-          description: '',
-          defaultValue: this.getDefaultFlight(),
-        },
-        {
-          id: 'tpm-7',
-          sector: '',
-          name: '',
-          description: '',
-          defaultValue: this.getDefaultFlight(),
-        },
-        {
-          id: 'tpm-8',
-          sector: '',
-          name: '',
-          description: '',
-          defaultValue: this.getDefaultFlight(),
-        },
-        {
-          id: 'tpm-9',
-          sector: '',
-          name: '',
-          description: '',
-          defaultValue: {
-            description: '',
-            value: 1,
-          },
-        },
-        {
-          id: 'tpm-10',
-          sector: '',
-          name: '',
-          description: '',
-          defaultValue: this.getDefaultHauling(),
-        },
-        {
-          id: 'tpm-11',
-          sector: '',
-          name: '',
-          description: '',
-          defaultValue: this.getDefaultHauling(),
-        },
-        {
-          id: 'tpm-12',
-          sector: '',
-          name: '',
-          description: '',
-          defaultValue: this.getDefaultHauling(),
-        },
-        {
-          id: 'tpm-13',
-          sector: '',
-          name: '',
-          description: '',
-          defaultValue: this.getDefaultHauling(),
-        },
-        {
-          id: 'tpm-14',
-          sector: '',
-          name: '',
-          description: '',
-          defaultValue: this.getDefaultHauling(),
-        },
-        {
-          id: 'tpm-15',
-          sector: '',
-          name: '',
-          description: '',
-          defaultValue: this.getDefaultHauling(),
-        },
-        {
-          id: 'tpm-16',
-          sector: '',
-          name: '',
-          description: '',
+          id: 'tpm-1', // Kept original ID
+          sector: 'RAIL', // New Hitachi Data
+          name: 'Tramway',
+          description: 'Transport by tramway',
           defaultValue: this.getDefaultRollling(),
         },
         {
-          id: 'tpm-17',
-          sector: '',
-          name: '',
-          description: '',
+          id: 'tpm-2', // Kept original ID
+          sector: 'RAIL', // New Hitachi Data
+          name: 'Urban',
+          description: 'Transport by urban rail',
           defaultValue: this.getDefaultRollling(),
         },
         {
-          id: 'tpm-18',
-          sector: '',
-          name: '',
-          description: '',
+          id: 'tpm-10', // Kept original ID
+          sector: 'RAIL', // New Hitachi Data
+          name: 'Regional / intercity',
+          description: 'Transport by regional/intercity rail',
           defaultValue: this.getDefaultRollling(),
         },
         {
-          id: 'tpm-19',
-          sector: '',
-          name: '',
-          description: '',
+          id: 'tpm-11', // Kept original ID
+          sector: 'RAIL', // New Hitachi Data
+          name: 'Hi-speed',
+          description: 'Transport by high-speed rail',
           defaultValue: this.getDefaultRollling(),
         },
         {
-          id: 'tpm-20',
-          sector: '',
-          name: '',
-          description: '',
-          defaultValue: this.getDefaultBoating(),
+          id: 'tpm-16', // Kept original ID
+          sector: 'GROUND CIVILIAN', // New Hitachi Data
+          name: 'Urban bus - fuel/diesel/CNG',
+          description: 'Transport by urban bus (fuel)',
+          defaultValue: this.getDefaultHauling(),
         },
         {
-          id: 'tpm-21',
-          sector: '',
-          name: '',
-          description: '',
-          defaultValue: this.getDefaultBoating(),
-        },
-        {
-          id: 'tpm-22',
-          sector: '',
-          name: '',
-          description: '',
-          defaultValue: this.getDefaultBoating(),
+          id: 'tpm-17', // Kept original ID
+          sector: 'GROUND CIVILIAN', // New Hitachi Data
+          name: 'Urban bus - electric',
+          description: 'Transport by urban bus (electric)',
+          defaultValue: this.getDefaultHauling(),
         },
       ],
     };

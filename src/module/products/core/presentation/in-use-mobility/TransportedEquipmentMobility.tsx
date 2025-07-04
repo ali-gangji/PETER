@@ -99,7 +99,7 @@ function TransportedEquipmentMobility() {
             {payload.platformModelId !== DefaultTransportedPlatformModelId && (
               <NumberField
                 id="payload"
-                classes="w-18xl ml-2"
+                className="w-18xl ml-2"
                 fieldValue={payload.payload}
                 label="Quantity of transportation units"
                 onChange={(value: number) => {

@@ -43,11 +43,11 @@ function EmbeddedEquipmentMobility() {
               );
             }}
           >
-            <MenuItem value={DefaultSectorId} classes="w-18xl">
+            <MenuItem value={DefaultSectorId} className="w-18xl">
               No sector selected
             </MenuItem>
             {sectors.map((sector) => (
-              <MenuItem value={sector} key={sector} classes="w-18xl">
+              <MenuItem value={sector} key={sector} className="w-18xl">
                 {sector}
               </MenuItem>
             ))}
@@ -98,7 +98,7 @@ function EmbeddedEquipmentMobility() {
             id="usage"
             fieldValue={product.inUseMobility.embedded.usage.usage}
             label="Adjusted use"
-            classes="ml-2 w-18xl"
+            className="ml-2 w-18xl"
             onChange={(value: number) => {
               dispatch(embeddedEquipmentMobilityUsageOverridden(value));
             }}

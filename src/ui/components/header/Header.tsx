@@ -1,10 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  AppBar,
   Box,
   Button,
-  Divider,
   ListItemIcon,
   ListItemText,
   MenuItem,
@@ -18,10 +16,14 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Menu, { MenuProps } from '@mui/material/Menu';
 import { styled, alpha } from '@mui/material/styles';
-import ThalesLogo from '../../../../public/thales-build-logo-blue.svg';
 
 function BrandLogo() {
-  return <img src={ThalesLogo} alt="Logo Thales" width="163.19" />;
+  // The SVG logo has been replaced with this styled placeholder div.
+  return (
+    <div className="h-8 w-40 bg-slate-200 rounded flex items-center justify-center">
+      <span className="text-xs font-semibold text-slate-500">Logo Placeholder</span>
+    </div>
+  );
 }
 
 interface MenuLinkProps {
@@ -75,16 +77,12 @@ const StyledMenu = styled((props: MenuProps) => (
 }));
 
 function MenuLink({ setState, path, label, value }: MenuLinkProps) {
-  // const urlMatch = useMatch(path);
   const navigate = useNavigate();
-
   const handleClick = (toPath: string) => navigate(toPath);
 
   return (
     <Tab
       label={label}
-      className="flex-shrink-0"
-      value={value}
       onClick={() => {
         setState(value);
         handleClick(path);
@@ -100,77 +98,51 @@ function getLastPart(url: string) {
 
 function Header() {
   const links = [
-    {
-      path: '/',
-      label: 'About',
-      value: 0,
-    },
-    {
-      path: '/evaluation',
-      label: 'Evaluation',
-      value: 1,
-    },
+    { path: '/', label: 'About', value: 0 },
+    { path: '/evaluation', label: 'Evaluation', value: 1 },
   ];
 
   const currentUrl = window.location.href;
-  const index = links.findIndex((object) => {
-    return object.path === `/${getLastPart(currentUrl)}`;
-  });
+  const index = links.findIndex(
+    (object) => object.path === `/${getLastPart(currentUrl)}`
+  );
 
   const [activeTab, setActiveTab] = React.useState(index);
-
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
 
   return (
-    <div className="w-full">
-      <AppBar position="static" className="bg-white-100">
-        <Toolbar disableGutters>
+    <header className="bg-white sticky top-0 z-50 shadow-md">
+      {/* Top Row */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Toolbar disableGutters sx={{ minHeight: '80px' }}>
           <BrandLogo />
-          <Typography variant="body2" className="text-bluegrey-500 ml-4">
-            PETER
-          </Typography>
-          <Divider
-            orientation="vertical"
-            variant="middle"
-            sx={{ flexGrow: 1 }}
-            flexItem
-          />
-          <Tabs
-            value={activeTab}
-            TabIndicatorProps={{
-              style: {
-                backgroundColor: '#041295',
-              },
-            }}
-            className="text-bluegrey-500 ml-4"
-            sx={{ flexGrow: 28 }}
-          >
-            {links.map((link) => (
-              <MenuLink
-                setState={setActiveTab}
-                key={link.path}
-                path={link.path}
-                label={link.label}
-                value={link.value}
-              />
-            ))}
-          </Tabs>
-          <Box sx={{ flexGrow: 0.5 }}>
-            <Button variant="outlined" onClick={handleClick} disableElevation>
+          <Box sx={{ flexGrow: 1 }} />
+          <Box>
+            <Button
+              variant="outlined"
+              onClick={handleClick}
+              disableElevation
+              sx={{
+                color: '#E6002D',
+                borderColor: '#E6002D',
+                '&:hover': {
+                  borderColor: '#E6002D',
+                  backgroundColor: 'rgba(230, 0, 45, 0.04)',
+                },
+              }}
+            >
               Useful links
             </Button>
             <StyledMenu
-              aria-controls={open ? 'demo-customized-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? 'true' : undefined}
+              id="demo-customized-menu"
               MenuListProps={{
                 'aria-labelledby': 'demo-customized-button',
               }}
@@ -178,50 +150,76 @@ function Header() {
               open={open}
               onClose={handleClose}
             >
-              <MenuItem
-                component="a"
-                aria-label="Go to Ecodesign space"
-                rel="noopener noreferrer"
-                target="_blank"
-                className="flex"
-                href=""
-              >
-                <ListItemIcon style={{ color: 'black' }}>
-                  <EnergySavingsLeafIcon />
+              <MenuItem component="a" href="">
+                <ListItemIcon>
+                  <EnergySavingsLeafIcon fontSize="small" />
                 </ListItemIcon>
                 <ListItemText>Ecodesign space</ListItemText>
               </MenuItem>
-              <MenuItem
-                component="a"
-                aria-label="Ask questions on PETER"
-                href=""
-                rel="noopener noreferrer"
-                target="_blank"
-                className="flex"
-              >
-                <ListItemIcon style={{ color: 'black' }}>
-                  <HelpIcon />
+              <MenuItem component="a" href="">
+                <ListItemIcon>
+                  <HelpIcon fontSize="small" />
                 </ListItemIcon>
                 <ListItemText>Questions</ListItemText>
               </MenuItem>
-              <MenuItem
-                component="a"
-                aria-label="Mail to PETER"
-                href=""
-                rel="noopener noreferrer"
-                target="_blank"
-                className="flex"
-              >
-                <ListItemIcon style={{ color: 'black' }}>
-                  <EmailIcon />
+              <MenuItem component="a" href="">
+                <ListItemIcon>
+                  <EmailIcon fontSize="small" />
                 </ListItemIcon>
                 <ListItemText>Contact</ListItemText>
               </MenuItem>
             </StyledMenu>
           </Box>
         </Toolbar>
-      </AppBar>
-    </div>
+      </div>
+      {/* Bottom Row */}
+      <div style={{ backgroundColor: '#f4f4f4' }} className="border-t border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Toolbar disableGutters sx={{ minHeight: '56px' }}>
+            <Typography
+              variant="h5"
+              component="h1"
+              sx={{
+                fontWeight: 400,
+                fontSize: '1.4rem',
+                lineHeight: 1,
+                color: 'text.primary'
+              }}
+            >
+              PETER
+            </Typography>
+            <Box sx={{ flexGrow: 1 }} />
+            <Tabs
+              value={activeTab}
+              TabIndicatorProps={{
+                style: {
+                  backgroundColor: '#E6002D',
+                },
+              }}
+              sx={{
+                '& .Mui-selected': {
+                  color: '#E6002D !important',
+                },
+                '& .MuiTab-root': {
+                  color: '#334155',
+                  fontWeight: 500,
+                },
+              }}
+            >
+              {links.map((link) => (
+                <MenuLink
+                  setState={setActiveTab}
+                  key={link.path}
+                  path={link.path}
+                  label={link.label}
+                  value={link.value}
+                />
+              ))}
+            </Tabs>
+          </Toolbar>
+        </div>
+      </div>
+    </header>
   );
 }
 

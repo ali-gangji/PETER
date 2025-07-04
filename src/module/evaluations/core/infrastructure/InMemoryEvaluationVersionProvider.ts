@@ -182,7 +182,7 @@ class InMemoryEvaluationVersionProvider {
                   },
                   {
                     id: '2',
-                    platformModelId: '2',
+                    platformModelId: 'tpm-2',
                     value: 0.53,
                   },
                   {
