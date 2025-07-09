@@ -198,7 +198,7 @@ function Homepage() {
             <Section title="Objective" canBeDisabled={false} enabled={true}>
               <div className="space-y-4 text-slate-600">
                 <p>
-                  This method has been specifically set for Hitachi equipment to identify 
+                  This method has been specifically set for equipment to identify 
                   the main environmental stakes to be considered in an ecodesign strategy. 
                   The ultimate purpose of this method is to assign an environmental 
                   category to the product / system under study.

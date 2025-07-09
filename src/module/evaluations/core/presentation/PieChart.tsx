@@ -1,111 +1,56 @@
-import React from 'react'
-import ReactApexChart from 'react-apexcharts';
-import { ApexOptions } from 'apexcharts';
+import React from 'react';
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { EvaluationResult } from '../domain/entity/EvaluationVersions';
 
 interface Props {
   result: EvaluationResult;
 }
 
-interface ColorDefinition {
-  color: string;
-  labelColor: string;
-}
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'];
 
-const colorMapping: Map<string, ColorDefinition> = new Map([
-  [
-    'Hardware mechanics',
-    {
-      color: '#4C5DFF',
-      labelColor: '#F7F7F9',
-    },
-  ],
-  [
-    'Hardware electronics',
-    {
-      color: '#33BCA5',
-      labelColor: '#131319',
-    },
-  ],
-  [
-    'Tests & Qualification',
-    {
-      color: '#FF4854',
-      labelColor: '#F7F7F9',
-    },
-  ],
-  [
-    'In-use power consumption',
-    {
-      color: '#FDDA24',
-      labelColor: '#131319',
-    },
-  ],
-  [
-    'In-use mobility',
-    {
-      color: '#AE2573',
-      labelColor: '#F7F7F9',
-    },
-  ],
-  [
-    'Recycling',
-    {
-      color: '#FFAA48',
-      labelColor: '#131319',
-    },
-  ],
-]);
+const CustomTooltip = ({ active, payload }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="p-2 bg-white border border-slate-300 rounded-md shadow-lg">
+        <p className="font-semibold text-slate-800">{`${payload[0].name}`}</p>
+        <p className="text-slate-600">{`Impact: ${payload[0].value.toFixed(2)} kg CO₂e (${payload[0].payload.percent.toFixed(1)}%)`}</p>
+      </div>
+    );
+  }
+  return null;
+};
 
-function PieChart({ result }: Props) {
-  const series = result.impacts.map((impact) => impact.total);
-  const options: ApexOptions = {
-    colors: result.impacts.map(
-      (impact) => colorMapping.get(impact.name)?.color
-    ),
-    chart: {
-      width: 432,
-      fontFamily: 'Roboto',
-    },
+function PieChartComponent({ result }: Props) {
+  const chartData = result.impacts.map((impact) => ({
+    name: impact.name,
+    value: impact.total,
+    percent: result.impactsSpread[impact.name] || 0,
+  }));
 
-    dataLabels: {
-      style: {
-        colors: result.impacts.map(
-          (impact) => colorMapping.get(impact.name)?.labelColor
-        ),
-      },
-      dropShadow: {
-        enabled: false,
-      },
-    },
-    labels: result.impacts.map((impact) => impact.name),
-    legend: {
-      position: 'left',
-    },
-    responsive: [
-      {
-        breakpoint: 480,
-        options: {
-          chart: {
-            width: 200,
-          },
-          legend: {
-            position: 'bottom',
-          },
-        },
-      },
-    ],
-  };
   return (
-    <div id="chart" className="h-24xl">
-      <ReactApexChart
-        options={options}
-        series={series}
-        type="pie"
-        width={432}
-      />
+    <div style={{ width: '100%', height: 300 }}>
+      <ResponsiveContainer>
+        <PieChart>
+          <Pie
+            data={chartData}
+            cx="50%"
+            cy="50%"
+            labelLine={false}
+            outerRadius={80}
+            fill="#8884d8"
+            dataKey="value"
+            nameKey="name"
+          >
+            {chartData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip content={<CustomTooltip />} />
+          <Legend />
+        </PieChart>
+      </ResponsiveContainer>
     </div>
   );
 }
 
-export default PieChart;
+export default PieChartComponent;
